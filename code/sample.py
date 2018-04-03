@@ -145,13 +145,15 @@ def read_data():
     temp_raw = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4)
     hum_raw = (data[6] << 8) | data[7]
 
-    dict = {}
     temperature = compensate_T(temp_raw)
     pres = compensate_P(pres_raw)
     hum = compensate_H(hum_raw)
+
+    dict = {}
     dict['temperature'] = temperature
     dict['ph'] = pres
     dict['humidity'] = hum
+    dict['timestamp'] = int(time.time())
 
     return dict
 
@@ -245,15 +247,15 @@ def read_light():
 
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(24, GPIO.IN)        # SW 1
-GPIO.setup(23, GPIO.IN)        # SW 2
-GPIO.setup(18, GPIO.IN)        # SW 3
-GPIO.setup(22, GPIO.OUT)    # LED 1
-GPIO.setup(27, GPIO.OUT)    # LED 2
-GPIO.setup(17, GPIO.OUT)    # LED 3
-GPIO.setup(4, GPIO.OUT)    # IrLED
-GPIO.setup(25, GPIO.OUT)    # LCD - RS
-GPIO.setup(5, GPIO.OUT)    # LCD - RESET
+GPIO.setup(24, GPIO.IN)   # SW 1
+GPIO.setup(23, GPIO.IN)   # SW 2
+GPIO.setup(18, GPIO.IN)   # SW 3
+GPIO.setup(22, GPIO.OUT)  # LED 1
+GPIO.setup(27, GPIO.OUT)  # LED 2
+GPIO.setup(17, GPIO.OUT)  # LED 3
+GPIO.setup(4, GPIO.OUT)   # IrLED
+GPIO.setup(25, GPIO.OUT)  # LCD - RS
+GPIO.setup(5, GPIO.OUT)   # LCD - RESET
 
 setup()
 get_calib_param()
@@ -272,10 +274,10 @@ else:
 
 # AWSIoTMQTTClient connection configuration
 myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
-myAWSIoTMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
-myAWSIoTMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
+myAWSIoTMQTTClient.configureOfflinePublishQueueing(-1)    # Infinite offline Publish queueing
+myAWSIoTMQTTClient.configureDrainingFrequency(2)          # Draining: 2 Hz
 myAWSIoTMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
-myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
+myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)       # 5 sec
 
 # Connect and subscribe to AWS IoT
 myAWSIoTMQTTClient.connect()
