@@ -1,2 +1,12 @@
-# OS X
-.DS_Store
+*.DS_Store
+/.envrc
+/.idea/
+/tmp/
+__pycache__/
+.cache/
+.venv3
+*pytest_cache
+*.pyc
+.coverage
+template.yml
+.python-version
