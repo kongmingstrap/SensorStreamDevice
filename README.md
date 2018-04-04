@@ -30,11 +30,15 @@ SensorStreamDevice
 ## Raspberry Pi
 
 1. `$ sudo pip install AWSIoTPythonSDK`
-2. `$ sudo pip install `
 
 ## AWS IoT
 
+1. Download Public key, Private key and Thing Cert from AWS IoT
+2. Include Public key, Private key and Thing Cert in Raspberry Pi
 
+# Run
+
+`$ python sample.py -e <YOUR_ENDPOINT> -r <YOUR_ROOT_CA> -c <YOUR_PUBLIC_KEY> -k <YOUR_PRIVATE_KEY> -t "/device/fukuoka/data"`
 
 # Reference
 - [Raspberry Pi の接続](https://docs.aws.amazon.com/ja_jp/iot/latest/developerguide/iot-sdk-setup.html)
